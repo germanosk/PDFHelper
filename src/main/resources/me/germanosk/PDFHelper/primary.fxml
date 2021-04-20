@@ -24,7 +24,7 @@
           </Tab>
           <Tab text="Extract Images">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #333333;" />
             </content>
           </Tab>
         </tabs>

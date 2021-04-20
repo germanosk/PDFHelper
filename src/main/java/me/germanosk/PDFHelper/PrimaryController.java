@@ -136,7 +136,10 @@ public class PrimaryController {
     }
     
     private void convertPDF(int pageNumber, File file) throws IOException{
-        String outputFile = file.getParentFile().getAbsolutePath()+"/COPY.pdf";
+    	String filename = file.getName();
+    	int pos = filename.lastIndexOf(".");
+    	String filenameWithoutExtension = filename.substring(0, pos);
+        String outputFile = file.getParentFile().getAbsolutePath()+"/"+filenameWithoutExtension+" - page "+pageNumber+".pdf";
        
         PDDocument doc = PDDocument.load(file);
         PageExtractor pageExtractor = new PageExtractor(doc, pageNumber, pageNumber);
