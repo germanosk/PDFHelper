@@ -1,14 +1,21 @@
 package me.germanosk.PDFHelper;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 import org.apache.pdfbox.multipdf.PageExtractor;
 import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.rendering.PDFRenderer;
 
+import javafx.beans.property.StringProperty;
+import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.image.WritableImage;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
@@ -22,10 +29,14 @@ public class PrimaryController {
 	TextField pageTextField;
 	@FXML
 	Label pageNumberLabel;
+	@FXML
+	ImageView pageMiniatureImageView;
 	
 	@FXML
 	VBox source;
 	
+	int pageCount = 0;
+	int pdfScale = 1;
 	File pdfFile;
 	
     @FXML
@@ -58,17 +69,18 @@ public class PrimaryController {
 		    success = true;
 		    try {
 		    	PDDocument doc = PDDocument.load(db.getFiles().get(0));
+		    	pageCount = doc.getNumberOfPages();
 			    System.err.println(" it is a PDF" );
-			    pageNumberLabel.setText(" / "+doc.getNumberOfPages());
-                pageTextField.setText(""+doc.getNumberOfPages());
                 doc.close();
                 pdfFile = db.getFiles().get(0);
+			    
+			    pageNumberLabel.setText(" / "+ pageCount);
+                pageTextField.setText(""+pageCount);
 		    	
 		    }catch (Exception e) {
+		    	e.printStackTrace();
 			    System.err.println(" NOT a PDF" );
-		    	
 			}
-		    
 		}
 		event.setDropCompleted(success);
 		event.consume();
@@ -93,7 +105,22 @@ public class PrimaryController {
     @FXML
     public void OnDragDone(DragEvent event) {
 		System.err.println("Drag Done");
-    	
+    }
+
+    @FXML
+    public void OnPageInputChanged(StringProperty property, String oldValue, String newValue) {
+    	int pageNumber = Integer.parseInt(newValue);
+    	if(pageNumber <= pageCount && pageNumber >= 0) {
+    		try {
+				setPageMiniature(pageNumber, pdfFile);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	}else {
+    		property.set(oldValue);
+    	}
+
     }
     
     @FXML
@@ -111,11 +138,23 @@ public class PrimaryController {
     private void convertPDF(int pageNumber, File file) throws IOException{
         String outputFile = file.getParentFile().getAbsolutePath()+"/COPY.pdf";
        
-        PDDocument doc = PDDocument.load(file);      
+        PDDocument doc = PDDocument.load(file);
         PageExtractor pageExtractor = new PageExtractor(doc, pageNumber, pageNumber);
         PDDocument outuptDoc = pageExtractor.extract();
         outuptDoc.save(outputFile);
         outuptDoc.close();
+        doc.close();
+    }
+    
+    private void setPageMiniature(int pageNumber, File file) throws IOException{
+    	PDDocument doc = PDDocument.load(file);
+    	
+    	int pageIndex = pageNumber-1;
+	    PDFRenderer renderer = new PDFRenderer(doc);
+	    BufferedImage img = renderer.renderImage(pageIndex, pdfScale);
+	    
+		WritableImage fxImage = SwingFXUtils.toFXImage(img, null);
+        pageMiniatureImageView.setImage((Image) fxImage);
         doc.close();
     }
 }

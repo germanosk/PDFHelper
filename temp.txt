@@ -1,0 +1,2 @@
+Warning: Path does not exist: target\classes\me\germanosk\FXMLTest\App.class
+
