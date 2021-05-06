@@ -10,7 +10,7 @@ rem PROJECT_VERSION: version used in pom.xml, e.g. 1.0-SNAPSHOT
 rem APP_VERSION: the application version, e.g. 1.0.0, shown in "about" dialog
 
 set JAVA_VERSION=15
-set MAIN_JAR=FXMLTest-%PROJECT_VERSION%.jar
+set MAIN_JAR=PDFHelper-%PROJECT_VERSION%.jar
 
 rem Set desired installer type: "app-image" "msi" "exe".
 set INSTALLER_TYPE=msi
@@ -37,7 +37,7 @@ echo detecting required modules
   --multi-release %JAVA_VERSION% ^
   --ignore-missing-deps ^
   --class-path "target\installer\input\libs\*" ^
-  --print-module-deps target\classes\me\germanosk\FXMLTest\App.class > temp.txt
+  --print-module-deps target\classes\me\germanosk\PDFHelper\App.class > temp.txt
 
 set /p detected_modules=<temp.txt
 
@@ -77,13 +77,14 @@ call "%JAVA_HOME%\bin\jpackage" ^
   --type %INSTALLER_TYPE% ^
   --dest target/installer ^
   --input target/installer/input/libs ^
-  --name FXMLTest ^
-  --main-class me.germanosk.FXMLTest.AppLauncher ^
+  --name PDFHelper ^
+  --main-class me.germanosk.PDFHelper.AppLauncher ^
   --main-jar %MAIN_JAR% ^
   --java-options -Xmx2048m ^
   --runtime-image target/java-runtime ^
   --icon src/main/logo/icon.ico ^
-  --app-version 0.1 ^
+  --app-version %APP_VERSION% ^
+  --vendor "germanosk" ^
   --win-dir-chooser ^
   --win-shortcut ^
   --win-per-user-install ^

@@ -1,2 +1,1 @@
-Warning: Path does not exist: target\classes\me\germanosk\FXMLTest\App.class
-
+java.base,java.desktop,java.scripting,jdk.jfr,jdk.unsupported
