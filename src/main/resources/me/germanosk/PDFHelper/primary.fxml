@@ -10,7 +10,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<TabPane prefHeight="300.0" prefWidth="400.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.germanosk.PDFHelper.PrimaryController">
+<TabPane prefHeight="300.0" prefWidth="400.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.germanosk.PDFHelper.PrimaryController">
         <tabs>
           <Tab text="Extract Page">
             <content>
@@ -20,6 +20,7 @@
                   <Label fx:id="pageNumberLabel" layoutX="63.0" layoutY="65.0" prefHeight="17.0" prefWidth="43.0" text="/0" textFill="#d9d9d9" />
                   <TextField fx:id="pageTextField" layoutX="11.0" layoutY="61.0" onTextChange="#OnPageInputChanged" prefHeight="25.0" prefWidth="52.0" />
                   <ImageView fx:id="pageMiniatureImageView" fitHeight="227.0" fitWidth="182.0" layoutX="200.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="18.0" AnchorPane.topAnchor="14.0" />
+                  <Label layoutX="234.0" layoutY="119.0" prefHeight="17.0" prefWidth="115.0" text="Drop PDF file here" textFill="#d9d9d9" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="18.0" AnchorPane.topAnchor="14.0" />
                </children></AnchorPane>
    
             </content>
@@ -28,7 +29,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" onDragDropped="#OnDragDropped" onDragOver="#OnDragOver" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: #333333;">
                <children>
-                  <TextField fx:id="imagePageTextField" onTextChange="#OnImageInputChanged" layoutX="92.0" layoutY="70.0" prefHeight="25.0" prefWidth="52.0" />
+                  <TextField fx:id="imagePageTextField" layoutX="92.0" layoutY="70.0" onTextChange="#OnImageInputChanged" prefHeight="25.0" prefWidth="52.0" />
                   <ImageView fx:id="imagePageMiniatureImageView" fitHeight="227.0" fitWidth="182.0" layoutX="204.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true" />
                   <RadioButton fx:id="imageExtractPage" layoutX="14.0" layoutY="74.0" mnemonicParsing="false" onAction="#imageSelectOnePage" selected="true" text="At Page" textFill="WHITE">
                      <toggleGroup>
@@ -36,6 +37,7 @@
                      </toggleGroup></RadioButton>
                   <RadioButton fx:id="imageExtractAllPages" layoutX="14.0" layoutY="97.0" mnemonicParsing="false" onAction="#imageSelectAllPages" text="All Pages" textFill="WHITE" toggleGroup="$imageExtractionGroup" />
                   <Button fx:id="extractImageButton" layoutX="14.0" layoutY="224.0" mnemonicParsing="false" onAction="#extractImages" text="Extract" />
+                  <Label layoutX="247.0" layoutY="127.0" text="Drop PDF file here" textFill="#d9d9d9" />
                </children></AnchorPane>
             </content>
           </Tab>
